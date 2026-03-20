@@ -10,16 +10,25 @@ export default function Contact() {
 
 const handleSubmit = async (e) => {
   e.preventDefault()
+
+  const lastSent = localStorage.getItem('contact_sent_at')
+  if (lastSent && Date.now() - Number(lastSent) < 60 * 60 * 1000) {
+    alert('Please wait an hour before sending another message.')
+    return
+  }
+
   const res = await fetch('https://formspree.io/f/xyknvojl', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(form),
   })
   if (res.ok) {
+    localStorage.setItem('contact_sent_at', Date.now())
     setSubmitted(true)
     setForm({ name: '', email: '', message: '' })
   }
 }
+
 
   return (
     <section id="contact" className="py-24">
@@ -75,15 +84,7 @@ function Field({ label, name, type, value, onChange, placeholder }) {
       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
         {label}
       </label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required
-        placeholder={placeholder}
-        className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
-      />
+        <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
     </div>
   )
 }
