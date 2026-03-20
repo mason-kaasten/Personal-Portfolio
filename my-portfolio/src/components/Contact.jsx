@@ -8,13 +8,18 @@ export default function Contact() {
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // TODO: wire up to Formspree, EmailJS, etc.
-    console.log('Form submitted:', form)
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  const res = await fetch('https://formspree.io/f/xyknvojl', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(form),
+  })
+  if (res.ok) {
     setSubmitted(true)
     setForm({ name: '', email: '', message: '' })
   }
+}
 
   return (
     <section id="contact" className="py-24">
