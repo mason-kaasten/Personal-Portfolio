@@ -47,6 +47,8 @@ const handleSubmit = async (e) => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
+              <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+        
               <Field label="Name" name="name" type="text" value={form.name} onChange={handleChange} placeholder="Jane Doe" />
               <Field label="Email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="jane@example.com" />
               <div>
@@ -92,7 +94,6 @@ function Field({ label, name, type, value, onChange, placeholder }) {
         placeholder={placeholder}
         className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
       />
-      <input type="text" name="_gotcha" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
     </div>
   )
 }
