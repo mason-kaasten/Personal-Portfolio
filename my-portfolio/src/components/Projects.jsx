@@ -3,6 +3,10 @@ import SectionHeader from './SectionHeader'
 
 const GITHUB_USERNAME = 'mason-kaasten'
 
+const LIVE_URLS = {
+  'CRUD-APP-DEMO': 'https://crud-app-demo-production.up.railway.app',
+}
+
 export default function Projects() {
   const [repos, setRepos] = useState([])
   const [loading, setLoading] = useState(true)
@@ -15,11 +19,17 @@ export default function Projects() {
         return res.json()
       })
       .then((data) => {
-        setRepos(data.filter((r) => !r.fork))
+        const filtered = data.filter((r) => !r.fork)
+        const pinned = ['CRUD-APP-DEMO', 'my-portfolio']
+        const sorted = [
+          ...filtered.filter(r => pinned.includes(r.name)),
+          ...filtered.filter(r => !pinned.includes(r.name))
+        ]
+        setRepos(sorted)
         setLoading(false)
       })
       .catch((err) => {
-        setError(err.message)
+        setError("Couldn't load repos right now. Check back soon!")
         setLoading(false)
       })
   }, [])
@@ -47,14 +57,17 @@ export default function Projects() {
 }
 
 function RepoCard({ repo }) {
-  return (
-    <a
-      href={repo.html_url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block p-6 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-cyan-600 dark:hover:border-cyan-400 transition-all hover:-translate-y-1 hover:shadow-lg"
-    >
-      <div className="flex items-start justify-between gap-2 mb-3">
+const liveUrl = LIVE_URLS[repo.name]
+const url = liveUrl || repo.html_url
+
+return (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group block p-6 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-cyan-600 dark:hover:border-cyan-400 transition-all hover:-translate-y-1 hover:shadow-lg"
+  >
+    <div className="flex items-start justify-between gap-2 mb-3">
         <h3 className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
           {repo.name}
         </h3>
