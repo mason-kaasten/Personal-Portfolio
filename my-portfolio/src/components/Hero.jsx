@@ -14,9 +14,9 @@ export default function Hero() {
             Software Developer
           </h2>
             <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl">
-            Software Development student at NAIT with experience in C#, .NET, JavaScript, and React. 
-            Strong foundation in building CRUD applications and working with relational databases. 
-            Seeking a part-time or full-time opportunity to apply and grow software development skills in a professional environment.
+            Software developer from NAIT with hands-on experience designing, building, and deploying full-stack web applications. 
+            Proficient in C#, .NET, React, and TypeScript with a strong foundation in object-oriented programming, relational database design, REST API development and agile collaboration. 
+            Adept at translating business requirements into scalable, maintainable solutions. Seeking to join a forward-thinking development team to create innovative solutions and support organizational growth. 
           </p>
           <div className="flex gap-4 pt-2 justify-center">
             <button
